@@ -11,8 +11,6 @@ $servCheck = "";
 $csvFile = file($_FILES["reportCSV"]["tmp_name"]);
 $sheetData = [];
 
-
-
 foreach ($csvFile as $line) {
     $sheetData[] = str_getcsv($line);
 }
@@ -25,8 +23,9 @@ $usefulReportDataHeader .= "<h3>Restock These:</h3><table class='striped'>
             <th>Restock Amount</th>
         </tr>";
 
-$zeroStockItemsHeader = "<BR/><BR/><h3>Out of Stock</h3>
-<table class='striped'>
+$zeroStockItemsHeader = "<BR/><BR/>
+<h3>Out of Stock</h3>
+    <table class='striped'>
         <tr>
             <th>Item Description</th>
             <th>Stock Left</th>
@@ -51,22 +50,18 @@ for ($i=1; $i < sizeof($sheetData); $i++)
     }
 
 #Check if item is out of stock and not a "return transaction"
-    else if( $sheetData[$i][6] < 1 &&
-             $sheetData[$i][7] > 0 )
+    else if( $sheetData[$i][6] < 1 && $sheetData[$i][7] > 0 )
     {
     #Split the string at the description index and check if it begins with "service"
     #Service is zero stock so it doesn't need to be checked earlier
-        $servCheck = substr($sheetData[$i][5],0,7);
-        
+        $servCheck = substr($sheetData[$i][5],0,7);        
         if($servCheck != "Service" && strtolower($singleCheck) != "single")
         {
             $zeroStockItems .= "<tr>";
-
             for ($j = 5; $j < 7; $j++)
             {
                 $zeroStockItems .= "<td>" . $sheetData[$i][$j] . " </td>";
             }
-
             $zeroStockItems .= "</tr>";
         }
     }
