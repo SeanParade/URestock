@@ -12,11 +12,11 @@ if(isset($_POST["submit"])){
     if ($fileType != "csv"){
         $uploadOk=0;
         echo "$fileType ???<br> ";
-        echo "THIS ISN'T A CSV, GUY!!<br> CSV FILES ONLY. NO GOOFS, ONLY FILES PLZ<br><br>";
+        echo "Only CSV files may be uploaded<br><br>";
     }
 }
 
-# File Size Check. "Now with Bonus Rejection!"
+# File Size Check. 
 if ($_FILES["reportCSV"]["size"] > 200000)
 {
     echo "Files have to be under 2mb";
@@ -24,7 +24,7 @@ if ($_FILES["reportCSV"]["size"] > 200000)
 }
 
 # Still not uploading? Apologize.
-# If it's good to upload, loljk process the csv as a string and whip it into an array
+# If it's good to upload, process the csv as a string and push it into an array
 if ($uploadOk == 0)
 {
     echo "Sorry, your file was not uploaded.";
